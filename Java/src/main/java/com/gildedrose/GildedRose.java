@@ -2,7 +2,10 @@ package com.gildedrose;
 
 class GildedRose {
     Item[] items;
-
+private static final String agedBrie = "Aged Brie";
+private static final String tAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
+private static final String sulfuras = "Sulfuras, Hand of Ragnaros";
+private static final String conjured = "Conjured Mana Cake";
     public GildedRose(Item[] items) {
         this.items = items;
     }
@@ -21,10 +24,11 @@ class GildedRose {
     }
 
     private void updateQuality(Item item) {
-        if (item.name.equals("Aged Brie")) {
+
+        if (item.name.equals(agedBrie)) {
             increaseQuality(item);
         }
-        else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        else if (item.name.equals(tAFKAL80ETC)) {
             increaseQuality(item);
             if (item.sellIn < 11) {
                 increaseQuality(item);  // Augmentation supplémentaire si moins de 10 jours
@@ -32,29 +36,27 @@ class GildedRose {
             if (item.sellIn < 6) {
                 increaseQuality(item);  // Augmentation supplémentaire si moins de 5 jours
             }
-        }
-        else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        } else if (item.name.equals(sulfuras)) {
             // Sulfuras ne change pas de qualité
-        }
-        else {
+        } else {
             decreaseQuality(item);  // Pour les autres items
         }
     }
 
     private void decreaseSellIn(Item item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (!item.name.equals(sulfuras)) {
             item.sellIn--;
         }
     }
 
     private void handleExpiredItem(Item item) {
-        if (item.name.equals("Aged Brie")) {
+        if (item.name.equals(agedBrie)) {
             increaseQuality(item);  // Aged Brie augmente en qualité après expiration
         }
-        else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        else if (item.name.equals(tAFKAL80ETC)) {
             item.quality = 0;  // Les billets de concert tombent à 0 après expiration
         }
-        else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        else if (item.name.equals(sulfuras)) {
             // Sulfuras ne change pas après expiration
         }
         else {
@@ -64,7 +66,7 @@ class GildedRose {
 // prend en considération le cas Conjured
     private void decreaseQuality(Item item) {
         if (item.quality > 0) {
-            if((item.name.equals("Conjured Mana Cake"))){
+            if((item.name.equals(conjured))){
                 item.quality=item.quality-2;
             }
          else{
