@@ -15,7 +15,8 @@ class GildedRose {
     void doTheJob(Item item){
        updateFirstBloc(item);
        updateSecondBloc(item);
-      updateThirdBloc(item);
+       if(sellIn(item)){
+      updateThirdBloc(item);}
     }
     private void updateFirstBloc(Item item) {
         if (item.name.equals("Aged Brie")){
@@ -42,23 +43,19 @@ class GildedRose {
                 }
             }
         }
-            else {
-            if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                return;
-            }
-            if (item.quality > 0) {
-                item.quality = item.quality - 1;
-            }
+            else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            return;
+        } else if (item.quality > 0) {
+            item.quality = item.quality - 1;
         }
     }
     private void updateSecondBloc(Item item) {
         if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
             return;
         }
-        item.sellIn = item.sellIn - 1;
+        item.sellIn --;
     }
     private void updateThirdBloc(Item item) {
-        if (item.sellIn < 0) {
             if (!item.name.equals("Aged Brie")) {
                 if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                     if (item.quality > 0) {
@@ -74,7 +71,9 @@ class GildedRose {
                     item.quality = item.quality + 1;
                 }
             }
-        }
-    }
 
+    }
+private Boolean sellIn(Item item){
+        return item.sellIn<0;
+}
 }
