@@ -9,70 +9,77 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-           doTheJob(item);
-    }}
+            doTheJob(item);
+        }}
     // la methode doTheJob fais le update de chaque Item
-    void doTheJob(Item item){
-       updateFirstBloc(item);
-       updateSecondBloc(item);
-       if(sellIn(item)){
-      updateThirdBloc(item);}
-    }
-    private void updateFirstBloc(Item item) {
-        if (item.name.equals("Aged Brie")){
-
-            increaseQuality(item);
+    void doTheJob(Item item) {
+        updateQuality(item);   // Met à jour la qualité en fonction du type d'item
+        decreaseSellIn(item);  // Décrémente le sellIn (sauf pour Sulfuras)
+        if (isExpired(item)) {
+            handleExpiredItem(item);  // Gère les items expirés
         }
-            else if( item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-
-            increaseQuality(item);
-                if (item.sellIn < 11) {
-                    increaseQuality(item);
-                }
-
-                if (item.sellIn < 6) {
-                    increaseQuality(item);
-                }
-
-        }
-            else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            return;
-        } else decreaseQuality(item);
     }
-    private void updateSecondBloc(Item item) {
-        if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            return;
-        }
-        item.sellIn --;
-    }
-    private void updateThirdBloc(Item item) {
+
+    private void updateQuality(Item item) {
         if (item.name.equals("Aged Brie")) {
             increaseQuality(item);
         }
         else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            item.quality = 0;
-        } else {
-            if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                return;
+            increaseQuality(item);
+            if (item.sellIn < 11) {
+                increaseQuality(item);  // Augmentation supplémentaire si moins de 10 jours
             }
-            decreaseQuality(item);
+            if (item.sellIn < 6) {
+                increaseQuality(item);  // Augmentation supplémentaire si moins de 5 jours
+            }
         }
-
+        else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            // Sulfuras ne change pas de qualité
+        }
+        else {
+            decreaseQuality(item);  // Pour les autres items
+        }
     }
 
+    private void decreaseSellIn(Item item) {
+        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            item.sellIn--;
+        }
+    }
+
+    private void handleExpiredItem(Item item) {
+        if (item.name.equals("Aged Brie")) {
+            increaseQuality(item);  // Aged Brie augmente en qualité après expiration
+        }
+        else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            item.quality = 0;  // Les billets de concert tombent à 0 après expiration
+        }
+        else if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            // Sulfuras ne change pas après expiration
+        }
+        else {
+            decreaseQuality(item);  // Les autres items perdent de la qualité après expiration
+        }
+    }
+// prend en considération le cas Conjured
     private void decreaseQuality(Item item) {
-        if (item.quality>0) {
-            item.quality = item.quality - 1;
+        if (item.quality > 0) {
+            if((item.name.equals("Conjured Mana Cake"))){
+                item.quality=item.quality-2;
+            }
+         else{
+            item.quality--;}
         }
     }
 
     private void increaseQuality(Item item) {
         if (item.quality < 50) {
-            item.quality = item.quality + 1;
+            item.quality++;
         }
     }
 
-    private Boolean sellIn(Item item){
-        return item.sellIn<0;
-}
+    private boolean isExpired(Item item) {
+        return item.sellIn < 0;
+    }
+
 }

@@ -107,7 +107,7 @@ public class GildedRoseTest {
         Item[] items = new Item[] { new Item("Conjured Mana Cake", 10, 20) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(19, app.items[0].quality);
+        assertEquals(18, app.items[0].quality);
         assertEquals(9, app.items[0].sellIn);
     }
 
@@ -116,7 +116,7 @@ public class GildedRoseTest {
         Item[] items = new Item[] { new Item("Conjured Mana Cake", 0, 20) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(18, app.items[0].quality);
+        assertEquals(16, app.items[0].quality);
         assertEquals(-1, app.items[0].sellIn);
     }
 
