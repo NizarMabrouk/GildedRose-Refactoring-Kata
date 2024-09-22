@@ -17,7 +17,47 @@ class GildedRose {
        updateSecondBloc(item);
       updateThirdBloc(item);
     }
+    private void updateFirstBloc(Item item) {
+        if (item.name.equals("Aged Brie")){
+            updateFirstBloc1(item);
+        }
+            else if( item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            updateFirstBloc1(item);
+            } else {
+            if (item.quality > 0) {
+                if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+                    item.quality = item.quality - 1;
+                }
+            }
+        }
+    }
 
+    private void updateFirstBloc1(Item item) {
+
+        if (item.quality < 50) {
+            item.quality = item.quality + 1;
+
+            if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (item.sellIn < 11) {
+                    if (item.quality < 50) {
+                        item.quality = item.quality + 1;
+                    }
+                }
+
+                if (item.sellIn < 6) {
+                    if (item.quality < 50) {
+                        item.quality = item.quality + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateSecondBloc(Item item) {
+        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            item.sellIn = item.sellIn - 1;
+        }
+    }
     private void updateThirdBloc(Item item) {
         if (item.sellIn < 0) {
             if (!item.name.equals("Aged Brie")) {
@@ -38,38 +78,4 @@ class GildedRose {
         }
     }
 
-
-    private void updateFirstBloc(Item item) {
-        if (!item.name.equals("Aged Brie")
-            && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            if (item.quality > 0) {
-                if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                    item.quality = item.quality - 1;
-                }
-            }
-        } else {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-
-                if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private void updateSecondBloc(Item item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            item.sellIn = item.sellIn - 1;
-        }
-    }
 }
