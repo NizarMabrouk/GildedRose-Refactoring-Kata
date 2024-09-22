@@ -19,15 +19,31 @@ class GildedRose {
     }
     private void updateFirstBloc(Item item) {
         if (item.name.equals("Aged Brie")){
-            updateFirstBloc1(item);
+
+            if (item.quality < 50) {
+                item.quality = item.quality + 1;
+            }
         }
             else if( item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            updateFirstBloc1(item);
-            } else {
-            if (item.quality > 0) {
-                if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-                    item.quality = item.quality - 1;
+
+            if (item.quality < 50) {
+                item.quality = item.quality + 1;
+
+                if (item.sellIn < 11) {
+                    if (item.quality < 50) {
+                        item.quality = item.quality + 1;
+                    }
                 }
+
+                if (item.sellIn < 6) {
+                    if (item.quality < 50) {
+                        item.quality = item.quality + 1;
+                    }
+                }
+            }
+        } else if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (item.quality > 0) {
+                item.quality = item.quality - 1;
             }
         }
     }
